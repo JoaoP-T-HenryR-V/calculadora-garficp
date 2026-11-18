@@ -4,18 +4,22 @@ num1 = 0
 
 operacao = ""
 
+expressao = ""
+
 def digitar(num):
-    num_atual = visor.get()
-    if(num_atual == 0):
-        visor.delete(0, tk.END)
     visor.insert(tk.END, num)
 
 def conta(sinal):
-    if(sinal != "-" or operacao == ""):
+    global operacao, expressao
+    if(operacao == ""):
         num1 = visor.get()
         visor.delete(0, tk.END)
+        expressao = expressao + num1 + sinal
         print(num1)
+        print(expressao)
         operacao = sinal
+    elif(operacao != "" and sinal == "-"):
+
 
 def resultado():
     num2 = visor.get()
@@ -24,7 +28,6 @@ def resultado():
 
 def apagar():
     visor.delete(0, tk.END)
-    visor.insert(tk.END,0)
 
 janela = tk.Tk()
 janela.title("Teclado da calculadora")
@@ -38,11 +41,23 @@ botao_C.grid(row=1,column=0 , padx=2, pady=2)
 botao_del = tk.Button(janela, text="⌫", width=6, command=lambda: digitar(1))
 botao_del.grid(row=1,column=1, padx=2, pady=2)
 
-botao_div = tk.Button(janela, text="÷", width=6, command=lambda: digitar(2))
+botao_div = tk.Button(janela, text="÷", width=6, command=lambda:conta("/"))
 botao_div.grid(row=1,column=2, padx=2, pady=2)
 
-botao_mult = tk.Button(janela, text="x", width=6, command=lambda: digitar(3))
+botao_mult = tk.Button(janela, text="x", width=6, command=lambda:conta("*"))
 botao_mult.grid(row=1,column=3, padx=2, pady=2)
+
+botao_mult = tk.Button(janela, text="-", width=6, command=lambda:conta("-"))
+botao_mult.grid(row=2,column=3, padx=2, pady=2)
+
+botao_mult = tk.Button(janela, text="+", width=6, command=lambda:conta("+"))
+botao_mult.grid(row=3,column=3, padx=2, pady=2)
+
+botao_mult = tk.Button(janela, text="=", width=6, height=3, command=lambda: digitar(3))
+botao_mult.grid(row=4, rowspan=2 ,column=3, padx=2, pady=2)
+
+botao_mult = tk.Button(janela, text=".", width=6, command=lambda: digitar(3))
+botao_mult.grid(row=5,column=2, padx=2, pady=2)
 
 botao_0 = tk.Button(janela, text="0", width=14, command=lambda: digitar(0))
 botao_0.grid(row=5,column=0, columnspan=2 , padx=2, pady=2)
