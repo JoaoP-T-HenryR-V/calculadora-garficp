@@ -7,16 +7,22 @@ operacao = ""
 
 expressao = ""
 
+neg = 0
+
 # checar o comentario acima do botão do "-"
 
 def digitar(num):
     visor.insert(tk.END, num)
 
 def nn():
-    visor.insert(tk.END, "-")
+    global neg
+    neg = 1
+    visor.insert(tk.END,"-")
+    
+    
 
 def conta(sinal):
-    global operacao, expressao
+    global operacao, expressao, neg
     if(operacao == ""):
         num1 = visor.get()
         visor.delete(0, tk.END)
@@ -25,9 +31,12 @@ def conta(sinal):
         operacao = sinal
     elif(operacao != "" and sinal == "-"):
         nn()
+        sinal = ""
+    elif(neg == 1):
+        neg = 0
         num1 = visor.get()
         visor.delete(0, tk.END)
-        expressao = expressao + (num1*-1) + sinal
+        expressao = expressao + num1 + sinal
         print(expressao)
         operacao = sinal
     else:
@@ -40,10 +49,11 @@ def conta(sinal):
 
 
 def resultado():
+    global expressao
     num2 = visor.get()
     expressao = expressao + num2
     result = eval(expressao)
-    visor.insert(result)
+    visor.insert("result")
 
 def apagar():
     visor.delete(0, tk.END)
