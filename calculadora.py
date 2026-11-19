@@ -1,13 +1,19 @@
 import tkinter as tk
 
 num1 = 0
+num2 = 0
 
 operacao = ""
 
 expressao = ""
 
+# checar o comentario acima do botão do "-"
+
 def digitar(num):
     visor.insert(tk.END, num)
+
+def nn():
+    visor.insert(tk.END, "-")
 
 def conta(sinal):
     global operacao, expressao
@@ -15,15 +21,28 @@ def conta(sinal):
         num1 = visor.get()
         visor.delete(0, tk.END)
         expressao = expressao + num1 + sinal
-        print(num1)
         print(expressao)
         operacao = sinal
     elif(operacao != "" and sinal == "-"):
+        nn()
+        num1 = visor.get()
+        visor.delete(0, tk.END)
+        expressao = expressao + (num1*-1) + sinal
+        print(expressao)
+        operacao = sinal
+    else:
+        num1 = visor.get()
+        visor.delete(0, tk.END)
+        expressao = expressao + num1 + sinal
+        print(expressao)
+        operacao = sinal
+
 
 
 def resultado():
     num2 = visor.get()
-    result = float(num1,operacao,num2)
+    expressao = expressao + num2
+    result = eval(expressao)
     visor.insert(result)
 
 def apagar():
@@ -47,13 +66,14 @@ botao_div.grid(row=1,column=2, padx=2, pady=2)
 botao_mult = tk.Button(janela, text="x", width=6, command=lambda:conta("*"))
 botao_mult.grid(row=1,column=3, padx=2, pady=2)
 
+# colocar um if no comando/função do botão (o if deve vir aqui pois não é a função que tem 2 casos é apenas o botão, isso deixa mais semantico, mas deixei funcionando)
 botao_mult = tk.Button(janela, text="-", width=6, command=lambda:conta("-"))
 botao_mult.grid(row=2,column=3, padx=2, pady=2)
 
 botao_mult = tk.Button(janela, text="+", width=6, command=lambda:conta("+"))
 botao_mult.grid(row=3,column=3, padx=2, pady=2)
 
-botao_mult = tk.Button(janela, text="=", width=6, height=3, command=lambda: digitar(3))
+botao_mult = tk.Button(janela, text="=", width=6, height=3, command=lambda: resultado())
 botao_mult.grid(row=4, rowspan=2 ,column=3, padx=2, pady=2)
 
 botao_mult = tk.Button(janela, text=".", width=6, command=lambda: digitar(3))
